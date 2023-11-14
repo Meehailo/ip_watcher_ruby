@@ -1,0 +1,55 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    bigdecimal (3.1.4)
+    byebug (11.1.3)
+    concurrent-ruby (1.2.2)
+    dotenv (2.8.1)
+    et-orbi (1.2.7)
+      tzinfo
+    fugit (1.9.0)
+      et-orbi (~> 1, >= 1.2.7)
+      raabro (~> 1.4)
+    mustermann (3.0.0)
+      ruby2_keywords (~> 0.0.1)
+    mysql2 (0.5.5)
+    net-ping (2.0.8)
+    nio4r (2.5.9)
+    puma (6.4.0)
+      nio4r (~> 2.0)
+    raabro (1.4.0)
+    rack (2.2.8)
+    rack-protection (3.1.0)
+      rack (~> 2.2, >= 2.2.4)
+    ruby2_keywords (0.0.5)
+    rufus-scheduler (3.9.1)
+      fugit (~> 1.1, >= 1.1.6)
+    sequel (5.74.0)
+      bigdecimal
+    sinatra (3.1.0)
+      mustermann (~> 3.0)
+      rack (~> 2.2, >= 2.2.4)
+      rack-protection (= 3.1.0)
+      tilt (~> 2.0)
+    sinatra-strong-params (0.1.0)
+      sinatra (>= 1.4.0)
+    tilt (2.3.0)
+    tzinfo (2.0.6)
+      concurrent-ruby (~> 1.0)
+
+PLATFORMS
+  aarch64-linux
+
+DEPENDENCIES
+  byebug
+  dotenv
+  mysql2 (~> 0.5.5)
+  net-ping
+  puma (~> 6.4)
+  rufus-scheduler
+  sequel
+  sinatra (~> 3.0)
+  sinatra-strong-params
+
+BUNDLED WITH
+   2.4.10

@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - 4567:4567
+    depends_on:
+      - mysql
+      # - clickhouse
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: ip_watcher_db
+      CLICKHOUSE_DB_URL: http://clickhouse:8123
+    # networks:
+    #   - mynetwork
+
+  scheduler:
+    build: .
+    command: ruby scheduler.rb
+    volumes:
+      - .:/app
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: ip_watcher_db
+      CLICKHOUSE_DB_URL: http://clickhouse:8123
+    # networks:
+    #   - mynetwork
+
+  mysql:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: ip_watcher_db
+
+  # clickhouse:
+  #   image: yandex/clickhouse-server:latest
+  #   volumes:
+  #     - clickhouse_data:/var/lib/clickhouse
+  #   ports:
+  #     - "8123:8123"
+
+volumes:
+  mysql_data:
+  # clickhouse_data:
+
+# networks:
+#   mynetwork:
+#     driver: bridge
+#     enable_ipv6: true
+#     ipam:
+#       driver: default
+#       config:
+#         - subnet: "fd00:1234:5678::/64"
