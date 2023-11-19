@@ -9,7 +9,7 @@ services:
       - 4567:4567
     depends_on:
       - mysql
-      # - clickhouse
+      - clickhouse
     environment:
       MYSQL_HOST: mysql
       MYSQL_USER: root
@@ -44,16 +44,16 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: ip_watcher_db
 
-  # clickhouse:
-  #   image: yandex/clickhouse-server:latest
-  #   volumes:
-  #     - clickhouse_data:/var/lib/clickhouse
-  #   ports:
-  #     - "8123:8123"
+  clickhouse:
+    image: yandex/clickhouse-server:latest
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+    ports:
+      - "8123:8123"
 
 volumes:
   mysql_data:
-  # clickhouse_data:
+  clickhouse_data:
 
 # networks:
 #   mynetwork:

@@ -6,6 +6,7 @@ require 'json'
 require 'sinatra/strong-params'
 Dotenv.load
 require_relative 'config/database'
+require_relative 'config/clickhouse'
 
 Dir[File.join(File.dirname(__FILE__), 'app/models', '*.rb')].each { |file| require file }
 Dir[File.join(File.dirname(__FILE__), 'app/routes', '*.rb')].each { |file| require file }

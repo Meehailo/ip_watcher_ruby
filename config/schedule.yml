@@ -1,3 +1,0 @@
-scheduled_task:
-  cron: '* * * * *'
-  class: 'PingIpJob' 
