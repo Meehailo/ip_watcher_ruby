@@ -11,4 +11,4 @@ RUN bundle install
 
 COPY . /app
 
-CMD ["ruby", "app.rb"]
+CMD ["rackup", "config.ru", "--host", "0.0.0.0", "--port", "4567"]
