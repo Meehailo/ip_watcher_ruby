@@ -42,7 +42,6 @@ services:
       - mysql_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: ip_watcher_db
 
   clickhouse:
     image: yandex/clickhouse-server:latest

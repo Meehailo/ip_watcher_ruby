@@ -8,8 +8,7 @@ Dotenv.load
 require_relative 'config/database'
 require_relative 'config/clickhouse'
 
-Dir[File.join(File.dirname(__FILE__), 'app/models', '*.rb')].each { |file| require file }
-Dir[File.join(File.dirname(__FILE__), 'app/routes', '*.rb')].each { |file| require file }
+Dir[File.join(File.dirname(__FILE__), 'app/**', '*.rb')].each { |file| require file }
 Dir[File.join(File.dirname(__FILE__), 'jobs', '*.rb')].each { |file| require file }
 
 class App < Sinatra::Application

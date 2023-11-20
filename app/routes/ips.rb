@@ -54,24 +54,10 @@ class Ips < Sinatra::Application
   #  - получить статистику для адреса (time_from: datetime, time_to: datetime)
   get '/ips/:id/stats', allows: [:time_from, :time_to, :id] do
     ip = Ip.where(id: params[:id]).first
-    unless ip.nil?
-      sql = <<-SQL
-        SELECT 
-          ip_address,
-          AVG(rtt),
-          MIN(rtt),
-          MAX(rtt),
-          quantile(0.5)(rtt),
-          stddevPop(rtt),
-          (countIf(ping_status = 0) / count()) * 100
-        FROM ping_statistics
-        WHERE ip_address = '#{ip.address}'
-      SQL
-      sql += " AND timestamp >= '#{params[:time_from]}'" if params[:time_from]
-      sql += " AND timestamp <= '#{params[:time_to]}'" if params[:time_to]
-      sql += " GROUP BY ip_address"
+    result = PingStatistic.statistic(ip&.address, params[:time_from], params[:time_to])
 
-      result = Clickhouse.connection.execute(sql).chomp.split("\t")
+    unless result.empty?
+      result = PingStatistic.statistic(ip.address, params[:time_from], params[:time_to])
 
       status 200
       content_type :json

@@ -27,6 +27,11 @@ GEM
       thor
     concurrent-ruby (1.2.2)
     connection_pool (2.4.1)
+    database_cleaner-core (2.0.1)
+    database_cleaner-sequel (2.0.2)
+      database_cleaner-core (~> 2.0.0)
+      sequel
+    diff-lcs (1.5.0)
     dotenv (2.8.1)
     drb (2.2.0)
       ruby2_keywords
@@ -60,6 +65,21 @@ GEM
     rack (2.2.8)
     rack-protection (3.1.0)
       rack (~> 2.2, >= 2.2.4)
+    rack-test (2.1.0)
+      rack (>= 1.3)
+    rspec (3.12.0)
+      rspec-core (~> 3.12.0)
+      rspec-expectations (~> 3.12.0)
+      rspec-mocks (~> 3.12.0)
+    rspec-core (3.12.2)
+      rspec-support (~> 3.12.0)
+    rspec-expectations (3.12.3)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-mocks (3.12.6)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-support (3.12.1)
     ruby2_keywords (0.0.5)
     rufus-scheduler (3.9.1)
       fugit (~> 1.1, >= 1.1.6)
@@ -83,10 +103,13 @@ PLATFORMS
 DEPENDENCIES
   byebug
   clickhouse
+  database_cleaner-sequel
   dotenv
   mysql2 (~> 0.5.5)
   net-ping
   puma (~> 6.4)
+  rack-test
+  rspec
   rufus-scheduler
   sequel
   sinatra (~> 3.0)
