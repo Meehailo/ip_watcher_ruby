@@ -57,8 +57,6 @@ class Ips < Sinatra::Application
     result = PingStatistic.statistic(ip&.address, params[:time_from], params[:time_to])
 
     unless result.empty?
-      result = PingStatistic.statistic(ip.address, params[:time_from], params[:time_to])
-
       status 200
       content_type :json
       { result: {
