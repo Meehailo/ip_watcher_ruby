@@ -28,9 +28,6 @@ jobs:
     - name: Build Docker image
       run: docker build -t app .
 
-    - name: Run Docker Compose
-      run: docker-compose up -d
-
     - name: Create Database and Migrate
       run: |
         docker run --network container:mysql --network container:clickhouse app rake db:create
