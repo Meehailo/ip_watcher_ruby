@@ -1,0 +1,40 @@
+name: Docker CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:latest
+        env:
+          MYSQL_ROOT_PASSWORD: password
+        ports:
+          - 3306:3306
+      clickhouse:
+        image: yandex/clickhouse-server:latest
+        ports:
+          - 8123:8123
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build Docker image
+      run: docker build -t app .
+
+    - name: Run Docker Compose
+      run: docker-compose up -d
+
+    - name: Create Database and Migrate
+      run: |
+        docker run --network container:mysql --network container:clickhouse app rake db:create
+        docker run --network container:mysql --network container:clickhouse app rake db:migrate
+
+    - name: Execute Tests
+      run: docker run --network container:mysql --network container:clickhouse app SINATRA_ENV=test rspec
