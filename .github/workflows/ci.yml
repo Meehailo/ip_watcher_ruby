@@ -19,6 +19,13 @@ jobs:
     - name: Run Docker Compose
       run: docker-compose up -d
 
+    - name: Wait for MySQL
+      run: |
+        until docker-compose exec -T mysql mysqladmin ping --host=mysql --silent; do
+          echo "Waiting for MySQL..."
+          sleep 2
+        done
+
     - name: Create Database
       run: docker-compose exec -T app rake db:create
 
@@ -26,7 +33,7 @@ jobs:
       run: docker-compose exec -T app rake db:migrate
 
     - name: Create clickhouse
-      run: docker-compose exec -T app rake click_house:create
+      run: docker-compose exec -T app rake click_house:create_ping_statistics
 
     - name: Run Tests
-      run: docker-compose exec -T app SINATRA_ENV=test rspec
+      run: docker-compose exec -T app sh -c "SINATRA_ENV=test rspec"
