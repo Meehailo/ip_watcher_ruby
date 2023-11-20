@@ -1,0 +1,39 @@
+name: Docker CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build Docker image
+      run: docker-compose build
+
+    - name: Run Docker Compose
+      run: docker-compose up -d
+
+    - name: Wait for MySQL
+      run: |
+        until docker-compose exec -T mysql mysqladmin ping --host=mysql --silent; do
+          echo "Waiting for MySQL..."
+          sleep 2
+        done
+
+    - name: Create Database
+      run: docker-compose exec -T app rake db:create
+
+    - name: Migrate Database
+      run: docker-compose exec -T app rake db:migrate
+
+    - name: Create clickhouse
+      run: docker-compose exec -T app rake click_house:create_ping_statistics
+
+    - name: Run Tests
+      run: docker-compose exec -T app sh -c "SINATRA_ENV=test rspec"
