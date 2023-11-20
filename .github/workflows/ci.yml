@@ -20,13 +20,13 @@ jobs:
       run: docker-compose up -d
 
     - name: Create Database
-      run: docker-compose exec app rake db:create
+      run: docker-compose exec -T app rake db:create
 
     - name: Migrate Database
-      run: docker-compose exec app rake db:migrate
+      run: docker-compose exec -T app rake db:migrate
 
     - name: Create clickhouse
-      run: docker-compose exec app rake click_house:create
+      run: docker-compose exec -T app rake click_house:create
 
     - name: Run Tests
-      run: docker-compose exec app SINATRA_ENV=test rspec
+      run: docker-compose exec -T app SINATRA_ENV=test rspec
