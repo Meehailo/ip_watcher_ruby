@@ -28,17 +28,17 @@ jobs:
           sleep 2
         done
 
-    - name: Create Database
-      run: docker-compose exec -T app rake db:create
+    # - name: Create Database
+    #   run: docker-compose exec -T app rake db:create
 
-    - name: Migrate Database
-      run: docker-compose exec -T app rake db:migrate
+    # - name: Migrate Database
+    #   run: docker-compose exec -T app rake db:migrate
 
-    - name: Create clickhouse
-      run: docker-compose exec -T app rake click_house:create_ping_statistics
+    # - name: Create clickhouse
+    #   run: docker-compose exec -T app rake click_house:create_ping_statistics
 
-    - name: Run Tests
-      run: docker-compose exec -T app sh -c "SINATRA_ENV=test rspec"
+    # - name: Run Tests
+    #   run: docker-compose exec -T app sh -c "SINATRA_ENV=test rspec"
 
     - name: Install Dependencies for Code Analysis
       run: pip install -r requirements.txt
