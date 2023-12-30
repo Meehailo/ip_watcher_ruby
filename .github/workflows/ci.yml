@@ -9,6 +9,8 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
     steps:
     - uses: actions/checkout@v2
@@ -37,3 +39,9 @@ jobs:
 
     - name: Run Tests
       run: docker-compose exec -T app sh -c "SINATRA_ENV=test rspec"
+
+    - name: Install Dependencies for Code Analysis
+      run: pip install -r requirements.txt
+
+    - name: Analyze Code
+      run: python analyze_code.py
